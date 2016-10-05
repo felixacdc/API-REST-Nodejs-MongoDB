@@ -1,0 +1,23 @@
+{
+  "name": "api-rest",
+  "version": "1.0.0",
+  "description": "API REST con node.js y mongodb",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixacdc/API-REST-Nodejs-MongoDB.git"
+  },
+  "author": "Félix Méndez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felixacdc/API-REST-Nodejs-MongoDB/issues"
+  },
+  "homepage": "https://github.com/felixacdc/API-REST-Nodejs-MongoDB#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.6.2"
+  }
+}
