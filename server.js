@@ -6,6 +6,11 @@ var methodOverride = require("method-override");
 var app = express();
 var router = express.Router();
 
+mongoose.connect('mongodb://localhost/seriestv', function(err, res) {
+    if(err) console.log('ERROR: Conectando a la DB:' + err);
+    else console.log('Conexión a la DB realizada');
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
