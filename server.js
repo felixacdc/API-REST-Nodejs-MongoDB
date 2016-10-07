@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 
+require('./routes')(app);
+
 app.get('/', function(req, res) {
     res.send('Hola Mundo!');
 });

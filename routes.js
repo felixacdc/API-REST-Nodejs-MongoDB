@@ -33,7 +33,7 @@ module.exports = function(app) {
             genero: req.body.genero
         });
         
-        SerieTV.save(function(err) {
+        serietv.save(function(err) {
             if(!err) {
                 console.log('SerieTV Guardada!');
                 res.send(SerieTV);
