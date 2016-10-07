@@ -4,7 +4,7 @@ module.exports = function(app) {
     // GET
     findAllSeriesTv = function(req, res) {
         SerieTV.find(function(err, serietv) {
-            if(!error) 
+            if(!err) 
                 res.send(serietv);
             else 
                 console.log("ERROR: " + err);
@@ -13,8 +13,8 @@ module.exports = function(app) {
     
     // GET
     findByID = function(req, res) {
-        SerieTV.findByID(req.param.id, function(err, serietv) {
-            if(!error) 
+        SerieTV.findById(req.params.id, function(err, serietv) {
+            if(!err) 
                 res.send(serietv);
             else 
                 console.log("ERROR: " + err);
@@ -44,27 +44,29 @@ module.exports = function(app) {
     
     // PUT
     updateSerieTV = function(req, res) {
-        SerieTV.findByID(req.params.id, function(err, serietv) {
+        SerieTV.findById(req.params.id, function(err, serietv) {
             if(!err) {
                 serietv.titulo = req.body.titulo;
                 serietv.temporada = req.body.temporada;
                 serietv.pais = req.body.pais;
                 serietv.genero = req.body.genero;
+                
+                serietv.save(function(err) {
+                    if(!err) {
+                        console.log('SerieTV Actualizada!');
+                    } else 
+                        console.log("ERROR: " + err);
+                });
             } else 
                 console.log("ERROR: " + err);
         });
         
-        serietv.save(function(err) {
-            if(!err) {
-                console.log('SerieTV Actualizada!');
-            } else 
-                console.log("ERROR: " + err);
-        });
+        
     };
     
     // DELETE
     deleteSerieTV = function(req, res) {
-        SerieTV.findByID(function(err, serietv) {
+        SerieTV.findById(req.params.id, function(err, serietv) {
             serietv.remove(function(err) {
                 if(!err) {
                     console.log('SerieTV Borrada!');
@@ -78,6 +80,6 @@ module.exports = function(app) {
     app.get('/seriestv', findAllSeriesTv);
     app.get('/seriestv/:id', findByID);
     app.post('/seriestv', addSerieTV);
-    app.put('/seriestv:id', updateSerieTV);
+    app.put('/seriestv/:id', updateSerieTV);
     app.delete('/seriestv/:id', deleteSerieTV);
 }
