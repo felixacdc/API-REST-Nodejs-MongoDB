@@ -3,22 +3,24 @@ module.exports = function(app) {
     
     // GET
     findAllSeriesTv = function(req, res) {
-        SerieTV.find(function(err, serietv) {
-            if(!err) 
-                res.send(serietv);
-            else 
-                console.log("ERROR: " + err);
-        });
+        SerieTV.find()
+                .then(function(serietv) {
+                    res.send(serietv);
+                })
+                .catch(function(err) {
+                    console.log("ERROR: " + err);
+                });
     };
     
     // GET
     findByID = function(req, res) {
-        SerieTV.findById(req.params.id, function(err, serietv) {
-            if(!err) 
-                res.send(serietv);
-            else 
-                console.log("ERROR: " + err);
-        });
+        SerieTV.findById(req.params.id)
+                .then(function(serietv) {
+                    res.send(serietv);
+                })
+                .catch(function(err){
+                    console.log("ERROR: " + err);
+                });
     };
     
     // POST
@@ -33,47 +35,52 @@ module.exports = function(app) {
             genero: req.body.genero
         });
         
-        serietv.save(function(err) {
-            if(!err) {
-                console.log('SerieTV Guardada!');
-                res.send(SerieTV);
-            } else 
-                console.log("ERROR: " + err);
-        });
+        serietv.save()
+                .then(function(doc) {
+                    console.log('SerieTV Guardada!');
+                    res.send(doc);
+                })
+                .catch(function(err) {
+                    console.log("ERROR: " + err);
+                });
     };
     
     // PUT
     updateSerieTV = function(req, res) {
-        SerieTV.findById(req.params.id, function(err, serietv) {
-            if(!err) {
-                serietv.titulo = req.body.titulo;
-                serietv.temporada = req.body.temporada;
-                serietv.pais = req.body.pais;
-                serietv.genero = req.body.genero;
+        SerieTV.findById(req.params.id)
+                .then(function(serietv) {
+                    serietv.titulo = req.body.titulo;
+                    serietv.temporada = req.body.temporada;
+                    serietv.pais = req.body.pais;
+                    serietv.genero = req.body.genero;
+
+                    serietv.save()
+                            .then(function(doc) {
+                                console.log('SerieTV Actualizada!');
+                                res.send(doc);
+                            })
+                            .catch(function(err) {
+                                console.log("ERROR: " + err);
+                            });
                 
-                serietv.save(function(err) {
-                    if(!err) {
-                        console.log('SerieTV Actualizada!');
-                    } else 
-                        console.log("ERROR: " + err);
+                })
+                .catch(function(err){
+                    console.log("ERROR: " + err);
                 });
-            } else 
-                console.log("ERROR: " + err);
-        });
-        
-        
     };
     
     // DELETE
     deleteSerieTV = function(req, res) {
-        SerieTV.findById(req.params.id, function(err, serietv) {
-            serietv.remove(function(err) {
-                if(!err) {
-                    console.log('SerieTV Borrada!');
-                } else 
-                    console.log("ERROR: " + err); 
-            });
-        });
+        SerieTV.findById(req.params.id)
+                .then(function(serietv) {
+                    serietv.remove(function(err) {
+                        console.log('SerieTV Borrada!');
+                        res.send('Registro eliminado');
+                    });
+                })
+                .catch(function(err) {
+                    console.log("ERROR: " + err);
+                });
     }
     
     // API Routes
